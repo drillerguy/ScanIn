@@ -1,6 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#66f08d"/><stop offset="1" stop-color="#5bb8ff"/></linearGradient></defs>
-  <rect width="512" height="512" rx="120" fill="#0b0e13"/>
-  <rect x="76" y="76" width="360" height="360" rx="92" fill="url(#g)"/>
-  <path d="M324 169c-18-16-42-24-71-24-55 0-92 28-92 72 0 40 29 59 78 70 38 9 50 16 50 31 0 16-15 25-40 25-29 0-55-10-77-31l-35 41c28 29 67 45 110 45 61 0 101-30 101-78 0-42-29-61-82-73-35-8-47-14-47-28 0-14 13-23 35-23 23 0 44 8 62 24z" fill="#071017"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101721"/>
+      <stop offset="1" stop-color="#080b10"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#63f28d"/>
+      <stop offset="1" stop-color="#55b8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="70" y="70" width="372" height="372" rx="98" fill="url(#g)"/>
+  <g fill="none" stroke="#071017" stroke-width="20" stroke-linecap="round">
+    <path d="M151 195v-36c0-16 13-29 29-29h36"/>
+    <path d="M296 130h36c16 0 29 13 29 29v36"/>
+    <path d="M361 317v36c0 16-13 29-29 29h-36"/>
+    <path d="M216 382h-36c-16 0-29-13-29-29v-36"/>
+  </g>
+  <path d="M314 188c-18-14-39-21-64-21-47 0-78 23-78 59 0 33 24 49 66 59 32 7 42 13 42 25 0 13-13 20-34 20-25 0-47-8-66-25l-30 35c24 24 57 37 94 37 52 0 86-24 86-64 0-35-25-51-70-61-30-7-40-12-40-23 0-11 11-18 30-18 20 0 38 6 53 19z" fill="#071017"/>
+  <g fill="#071017" opacity=".55">
+    <rect x="168" y="404" width="4" height="22" rx="2"/>
+    <rect x="180" y="404" width="8" height="22" rx="2"/>
+    <rect x="197" y="404" width="3" height="22" rx="1.5"/>
+    <rect x="207" y="404" width="6" height="22" rx="2"/>
+    <rect x="221" y="404" width="10" height="22" rx="2"/>
+    <rect x="238" y="404" width="4" height="22" rx="2"/>
+    <rect x="249" y="404" width="7" height="22" rx="2"/>
+    <rect x="264" y="404" width="3" height="22" rx="1.5"/>
+    <rect x="274" y="404" width="9" height="22" rx="2"/>
+    <rect x="291" y="404" width="5" height="22" rx="2"/>
+    <rect x="304" y="404" width="9" height="22" rx="2"/>
+    <rect x="322" y="404" width="4" height="22" rx="2"/>
+    <rect x="334" y="404" width="10" height="22" rx="2"/>
+  </g>
 </svg>
