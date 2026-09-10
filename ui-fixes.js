@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const APP_VERSION = "0.2.6";
+  const APP_VERSION = "0.2.7";
   let pendingReload = false;
   let reloadTimer = null;
 
@@ -14,23 +14,16 @@
   function scheduleSafeReload() {
     if (pendingReload) return;
     pendingReload = true;
-
     const tryReload = () => {
       if (document.visibilityState !== "visible" || isEditing()) {
         reloadTimer = window.setTimeout(tryReload, 1200);
         return;
       }
-
       const key = "scanin-reload-" + APP_VERSION;
-      if (sessionStorage.getItem(key)) {
-        pendingReload = false;
-        return;
-      }
-
+      if (sessionStorage.getItem(key)) { pendingReload = false; return; }
       sessionStorage.setItem(key, "1");
       window.location.reload();
     };
-
     reloadTimer = window.setTimeout(tryReload, 1400);
   }
 
@@ -42,13 +35,21 @@
     } catch (_) {}
   }
 
+  function expandUPCE(digits) {
+    if (!/^\d{8}$/.test(digits) || !/^[01]/.test(digits)) return digits;
+    const ns=digits[0], d1=digits[1], d2=digits[2], d3=digits[3], d4=digits[4], d5=digits[5], d6=digits[6], check=digits[7];
+    let body;
+    if (["0","1","2"].includes(d6)) body = ns+d1+d2+d6+"00"+"00"+d3+d4+d5;
+    else if (d6 === "3") body = ns+d1+d2+d3+"00"+"000"+d4+d5;
+    else if (d6 === "4") body = ns+d1+d2+d3+d4+"0"+"0000"+d5;
+    else body = ns+d1+d2+d3+d4+d5+"0000"+d6;
+    return body + check;
+  }
+
   function normalizeDecodedBarcode(value) {
     const digits = String(value || "").replace(/\D/g, "");
-    const knownUpce = {
-      "04963406": "049000006346",
-      "01231003": "012000003103"
-    };
-    return knownUpce[digits] || value;
+    if (digits.length === 8 && /^[01]/.test(digits)) return expandUPCE(digits);
+    return digits || value;
   }
 
   function cleanupPhotoReader() {
@@ -82,10 +83,7 @@
           reject(error);
         }
       };
-      image.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        reject(new Error("Could not load image"));
-      };
+      image.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error("Could not load image")); };
       image.src = objectUrl;
     });
   }
@@ -103,10 +101,7 @@
           const decoded = await originalScanFile.call(this, file, false);
           cleanupPhotoReader();
           return normalizeDecodedBarcode(decoded);
-        } catch (error) {
-          firstError = error;
-        }
-
+        } catch (error) { firstError = error; }
         for (const degrees of [90, 270, 180]) {
           try {
             const alternate = await rotatedFile(file, degrees);
@@ -115,7 +110,6 @@
             return normalizeDecodedBarcode(decoded);
           } catch (_) {}
         }
-
         cleanupPhotoReader();
         throw firstError || new Error("Barcode not found");
       };
@@ -124,34 +118,22 @@
     const originalStart = Qr.prototype.start;
     if (typeof originalStart === "function") {
       Qr.prototype.start = function(cameraIdOrConfig, configuration, successCallback, errorCallback) {
-        const wrappedSuccess = (decodedText, decodedResult) => {
-          successCallback?.(normalizeDecodedBarcode(decodedText), decodedResult);
-        };
+        const wrappedSuccess = (decodedText, decodedResult) => successCallback?.(normalizeDecodedBarcode(decodedText), decodedResult);
         return originalStart.call(this, cameraIdOrConfig, configuration, wrappedSuccess, errorCallback);
       };
     }
   }
 
-  // Important for iPhone/PWA: do not programmatically focus auth inputs.
-  // Native tap focus is more reliable and avoids iOS showing the Paste menu.
   improveBarcodeScanner();
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.addEventListener("message", (event) => {
-      if (event.data?.type === "SCANIN_UPDATE_READY" && event.data.version !== APP_VERSION) {
-        scheduleSafeReload();
-      }
+      if (event.data?.type === "SCANIN_UPDATE_READY" && event.data.version !== APP_VERSION) scheduleSafeReload();
     });
-
     navigator.serviceWorker.addEventListener("controllerchange", scheduleSafeReload);
-
     window.addEventListener("focus", checkForUpdate);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") checkForUpdate();
-    });
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") checkForUpdate(); });
   }
 
-  window.addEventListener("pagehide", () => {
-    if (reloadTimer) window.clearTimeout(reloadTimer);
-  });
+  window.addEventListener("pagehide", () => { if (reloadTimer) window.clearTimeout(reloadTimer); });
 })();
