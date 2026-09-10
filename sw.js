@@ -1,6 +1,6 @@
-const CACHE_NAME = "scanin-v0.2.3";
-const APP_VERSION = "0.2.3";
-const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./app.js","./location.js","./manifest.webmanifest","./icon.svg"];
+const CACHE_NAME = "scanin-v0.2.4";
+const APP_VERSION = "0.2.4";
+const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./ios-input-fix.css","./app.js","./location.js","./ui-fixes.js","./manifest.webmanifest","./icon.svg"];
 
 self.addEventListener("install",(event)=>{
   event.waitUntil(
@@ -18,13 +18,7 @@ self.addEventListener("activate",(event)=>{
 
     const clients = await self.clients.matchAll({type:"window",includeUncontrolled:true});
     for (const client of clients) {
-      try {
-        const url = new URL(client.url);
-        if (url.origin !== self.location.origin) continue;
-        if (url.searchParams.get("appv") === APP_VERSION) continue;
-        url.searchParams.set("appv", APP_VERSION);
-        await client.navigate(url.toString());
-      } catch (_) {}
+      try { client.postMessage({ type:"SCANIN_UPDATE_READY", version:APP_VERSION }); } catch (_) {}
     }
   })());
 });
