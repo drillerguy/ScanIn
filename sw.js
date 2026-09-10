@@ -1,4 +1,4 @@
-const CACHE_NAME = "scanin-v0.2.1";
+const CACHE_NAME = "scanin-v0.2.2";
 const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./app.js","./location.js","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",(event)=>{event.waitUntil(caches.open(CACHE_NAME).then((cache)=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",(event)=>{event.waitUntil(caches.keys().then((keys)=>Promise.all(keys.filter((key)=>key!==CACHE_NAME).map((key)=>caches.delete(key)))).then(()=>self.clients.claim()));});
