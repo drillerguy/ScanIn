@@ -34,9 +34,34 @@
   border:1px solid rgba(99,242,141,.18);
   background:rgba(99,242,141,.07);
   color:var(--accent);
-  font-size:.52rem;
+  font-size:0!important;
   font-weight:850;
   letter-spacing:.02em;
 }
+.version-badge:after{content:"v0.2.6";font-size:.52rem}
+.build-label{font-size:0!important}
+.build-label:after{content:"ScanIn v0.2.6";font-size:.68rem}
 
-@media(max-width:380px){.version-badge{font-size:.48rem;padding:2px 5px}}
+/* html5-qrcode needs a real-sized render surface to decode curved/rotated UPCs.
+   Keep it far off-screen rather than shrinking it to 2px. */
+.photo-reader,#photoReader{
+  position:fixed!important;
+  left:-1400px!important;
+  top:0!important;
+  width:900px!important;
+  height:900px!important;
+  min-width:900px!important;
+  min-height:900px!important;
+  max-width:900px!important;
+  max-height:900px!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  z-index:-10!important;
+}
+.photo-reader img,.photo-reader canvas,#photoReader img,#photoReader canvas{
+  max-width:900px!important;
+  max-height:900px!important;
+}
+
+@media(max-width:380px){.version-badge:after{font-size:.48rem}}
