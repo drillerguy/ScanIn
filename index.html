@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./iphone-fix.css" />
   <link rel="stylesheet" href="./location.css" />
+  <link rel="stylesheet" href="./ios-input-fix.css" />
 </head>
 <body>
   <div id="authShell" class="auth-shell">
@@ -36,16 +37,16 @@
       </div>
 
       <form id="loginForm" class="auth-form">
-        <label>Email<input id="loginEmail" type="email" autocomplete="email" required /></label>
-        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required /></label>
+        <label>Email<input id="loginEmail" type="email" autocomplete="email" autocapitalize="none" enterkeyhint="next" required /></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" enterkeyhint="go" minlength="6" required /></label>
         <button class="primary-button" type="submit">Log in</button>
       </form>
 
       <form id="signupForm" class="auth-form hidden">
-        <label>Username<input id="signupUsername" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="mike_wallace" required /></label>
-        <label>Display name<input id="signupDisplayName" maxlength="60" placeholder="Mike" required /></label>
-        <label>Email<input id="signupEmail" type="email" autocomplete="email" required /></label>
-        <label>Password<input id="signupPassword" type="password" autocomplete="new-password" minlength="6" required /></label>
+        <label>Username<input id="signupUsername" autocomplete="username" autocapitalize="none" enterkeyhint="next" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="mike_wallace" required /></label>
+        <label>Display name<input id="signupDisplayName" maxlength="60" enterkeyhint="next" placeholder="Mike" required /></label>
+        <label>Email<input id="signupEmail" type="email" autocomplete="email" autocapitalize="none" enterkeyhint="next" required /></label>
+        <label>Password<input id="signupPassword" type="password" autocomplete="new-password" enterkeyhint="go" minlength="6" required /></label>
         <button class="primary-button" type="submit">Create ScanIn account</button>
       </form>
 
@@ -58,6 +59,7 @@
       <button class="brand" type="button" data-nav="scan" aria-label="Go to Scan">
         <span class="brand-mark">S</span>
         <span>SCANIN</span>
+        <span class="version-badge">v0.2.4</span>
       </button>
       <button id="topProfileBtn" class="top-profile" type="button" data-nav="profile" aria-label="Open profile">
         <img id="topAvatar" class="avatar tiny hidden" alt="" />
@@ -159,7 +161,7 @@
         </form>
 
         <button id="logoutBtn" class="danger-button" type="button">Log out</button>
-        <p class="build-label">ScanIn v0.2.0</p>
+        <p class="build-label">ScanIn v0.2.4</p>
       </section>
     </main>
 
@@ -178,5 +180,6 @@
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="./app.js"></script>
   <script src="./location.js"></script>
+  <script src="./ui-fixes.js"></script>
 </body>
 </html>
