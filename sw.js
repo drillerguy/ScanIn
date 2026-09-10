@@ -1,6 +1,6 @@
-const CACHE_NAME = "scanin-v0.2.6";
-const APP_VERSION = "0.2.6";
-const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./ios-input-fix.css","./app.js","./location.js","./ui-fixes.js","./manifest.webmanifest","./icon.svg"];
+const CACHE_NAME = "scanin-v0.2.7";
+const APP_VERSION = "0.2.7";
+const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./ios-input-fix.css","./app.js","./barcode-fallback.js","./location.js","./ui-fixes.js","./manifest.webmanifest","./icon.svg"];
 
 self.addEventListener("install",(event)=>{
   event.waitUntil(
