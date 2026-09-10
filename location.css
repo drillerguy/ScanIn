@@ -10,6 +10,24 @@
 .composer-actions{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:8px}.composer-actions>*{min-width:0}.composer-actions button:disabled{opacity:.55;pointer-events:none}
 .checkin-location{margin-top:6px;color:var(--accent2);font-size:.68rem;font-weight:800;line-height:1.25;white-space:normal}.feed-card .checkin-location{padding-top:2px}
 
+/* Visible build number so screenshots immediately show which release is running. */
+.brand:after{
+  content:"v0.2.2";
+  display:inline-flex;
+  align-items:center;
+  margin-left:1px;
+  padding:3px 6px;
+  border-radius:999px;
+  border:1px solid rgba(99,242,141,.18);
+  background:rgba(99,242,141,.07);
+  color:var(--accent);
+  font-size:.52rem;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+.build-label{font-size:0!important}
+.build-label:after{content:"ScanIn v0.2.2";font-size:.68rem}
+
 /* html5-qrcode temporarily mounts the selected photo here while decoding it.
    Keep that helper surface off-screen so the user's photo never becomes page content. */
 .photo-reader,#photoReader{
@@ -32,4 +50,4 @@
   max-height:2px!important;
 }
 
-@media(max-width:380px){.checkin-composer{padding:13px}.composer-actions{grid-template-columns:1fr}.location-button{padding:11px}.pending-product{gap:9px}.pending-icon,.pending-thumb{width:44px;height:44px}}
+@media(max-width:380px){.checkin-composer{padding:13px}.composer-actions{grid-template-columns:1fr}.location-button{padding:11px}.pending-product{gap:9px}.pending-icon,.pending-thumb{width:44px;height:44px}.brand:after{font-size:.48rem;padding:2px 5px}}
