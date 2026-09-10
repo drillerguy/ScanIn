@@ -4,12 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0e13" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ScanIn" />
   <meta name="description" content="Scan products, check in with friends, earn points, and climb the ScanIn leaderboard." />
   <title>ScanIn</title>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icon.svg" />
   <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./iphone-fix.css" />
 </head>
 <body>
   <div id="authShell" class="auth-shell">
@@ -153,7 +158,7 @@
         </form>
 
         <button id="logoutBtn" class="danger-button" type="button">Log out</button>
-        <p class="build-label">ScanIn v0.1.0</p>
+        <p class="build-label">ScanIn v0.1.3</p>
       </section>
     </main>
 
