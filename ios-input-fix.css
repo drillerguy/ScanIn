@@ -1,0 +1,42 @@
+/* ScanIn iPhone input / keyboard reliability */
+.auth-card input,
+.auth-card textarea,
+.auth-form input,
+.auth-form textarea{
+  position:relative;
+  z-index:2;
+  pointer-events:auto!important;
+  touch-action:manipulation;
+  -webkit-user-select:text;
+  user-select:text;
+  -webkit-appearance:none;
+  appearance:none;
+  font-size:16px!important;
+  line-height:1.25;
+}
+
+.auth-form label{
+  position:relative;
+  z-index:2;
+  pointer-events:auto;
+  touch-action:manipulation;
+}
+
+/* Use a real version element rather than the older CSS pseudo-badge. */
+.brand:after{display:none!important;content:none!important}
+.version-badge{
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  margin-left:1px;
+  padding:3px 6px;
+  border-radius:999px;
+  border:1px solid rgba(99,242,141,.18);
+  background:rgba(99,242,141,.07);
+  color:var(--accent);
+  font-size:.52rem;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+
+@media(max-width:380px){.version-badge{font-size:.48rem;padding:2px 5px}}
