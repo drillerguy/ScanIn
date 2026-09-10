@@ -1,5 +1,46 @@
-const CACHE_NAME = "scanin-v0.2.2";
+const CACHE_NAME = "scanin-v0.2.3";
+const APP_VERSION = "0.2.3";
 const APP_SHELL = ["./","./index.html","./styles.css","./iphone-fix.css","./location.css","./app.js","./location.js","./manifest.webmanifest","./icon.svg"];
-self.addEventListener("install",(event)=>{event.waitUntil(caches.open(CACHE_NAME).then((cache)=>cache.addAll(APP_SHELL)).then(()=>self.skipWaiting()));});
-self.addEventListener("activate",(event)=>{event.waitUntil(caches.keys().then((keys)=>Promise.all(keys.filter((key)=>key!==CACHE_NAME).map((key)=>caches.delete(key)))).then(()=>self.clients.claim()));});
-self.addEventListener("fetch",(event)=>{if(event.request.method!=="GET")return;const url=new URL(event.request.url);if(url.origin!==self.location.origin)return;event.respondWith(fetch(event.request).then((response)=>{const copy=response.clone();caches.open(CACHE_NAME).then((cache)=>cache.put(event.request,copy));return response;}).catch(()=>caches.match(event.request).then((cached)=>cached||caches.match("./index.html"))));});
+
+self.addEventListener("install",(event)=>{
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache)=>cache.addAll(APP_SHELL))
+      .then(()=>self.skipWaiting())
+  );
+});
+
+self.addEventListener("activate",(event)=>{
+  event.waitUntil((async()=>{
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((key)=>key!==CACHE_NAME).map((key)=>caches.delete(key)));
+    await self.clients.claim();
+
+    const clients = await self.clients.matchAll({type:"window",includeUncontrolled:true});
+    for (const client of clients) {
+      try {
+        const url = new URL(client.url);
+        if (url.origin !== self.location.origin) continue;
+        if (url.searchParams.get("appv") === APP_VERSION) continue;
+        url.searchParams.set("appv", APP_VERSION);
+        await client.navigate(url.toString());
+      } catch (_) {}
+    }
+  })());
+});
+
+self.addEventListener("fetch",(event)=>{
+  if(event.request.method!=="GET") return;
+  const url = new URL(event.request.url);
+  if(url.origin!==self.location.origin) return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then((response)=>{
+        const copy=response.clone();
+        caches.open(CACHE_NAME).then((cache)=>cache.put(event.request,copy));
+        return response;
+      })
+      .catch(()=>caches.match(event.request).then((cached)=>cached||caches.match("./index.html")))
+  );
+});
