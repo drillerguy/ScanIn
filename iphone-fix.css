@@ -1,0 +1,81 @@
+/* iPhone / narrow-screen containment fixes */
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overscroll-behavior-x:none;
+}
+body{position:relative}
+.auth-shell,.app-shell,main,.view,.panel,.scanner-panel,.reader,.scanner-placeholder,.stack-list,.leaderboard-list{
+  min-width:0;
+  max-width:100%;
+}
+main{overflow-x:hidden}
+
+/* Grid tracks must be allowed to shrink instead of pushing the page wider */
+.scanner-actions{
+  width:100%;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.scanner-actions>*{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  white-space:normal;
+  line-height:1.15;
+}
+.input-row{
+  width:100%;
+  min-width:0;
+  grid-template-columns:minmax(0,1fr) auto;
+}
+.input-row>*{min-width:0;max-width:100%}
+.input-row input{width:100%;min-width:0}
+
+/* Keep every tab inside the visual viewport */
+.bottom-nav{
+  left:0!important;
+  right:0!important;
+  width:100vw!important;
+  max-width:100vw!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  padding-left:max(4px,env(safe-area-inset-left,0px))!important;
+  padding-right:max(4px,env(safe-area-inset-right,0px))!important;
+  overflow:hidden;
+}
+.nav-item{
+  width:100%;
+  min-width:0!important;
+  max-width:100%;
+  overflow:hidden;
+}
+.nav-item small{
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Real phone sizing: no desktop-width rules on ordinary iPhones */
+@media(max-width:560px){
+  .topbar{padding-left:14px;padding-right:14px}
+  main{padding-left:12px;padding-right:12px}
+  .scanner-panel{width:100%;border-radius:18px}
+  .reader{min-height:245px}
+  .scanner-placeholder{padding:20px 12px}
+  .scan-frame{width:min(100%,310px)}
+  .scanner-actions{gap:8px;padding:12px}
+  .scanner-actions .primary-button,.scanner-actions .secondary-button{font-size:.88rem;padding:12px 8px}
+  .input-row{padding:12px;grid-template-columns:minmax(0,1fr) 82px}
+  .input-row .secondary-button{padding:12px 8px;font-size:.8rem}
+  .bottom-nav{padding-top:5px!important}
+  .nav-item{padding:7px 0 5px}
+  .nav-item small{font-size:.58rem}
+}
+
+@media(max-width:350px){
+  .scanner-actions{grid-template-columns:1fr}
+  .input-row{grid-template-columns:1fr}
+  .input-row .secondary-button{width:100%}
+}
