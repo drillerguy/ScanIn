@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const APP_VERSION = "0.2.4";
+  const APP_VERSION = "0.2.5";
   let pendingReload = false;
   let reloadTimer = null;
 
@@ -34,26 +34,6 @@
     reloadTimer = window.setTimeout(tryReload, 1400);
   }
 
-  function strengthenIOSFocus() {
-    const auth = document.getElementById("authShell");
-    if (!auth) return;
-
-    auth.addEventListener("pointerup", (event) => {
-      const field = event.target.closest?.("input:not([type='file']), textarea");
-      if (!field || field.disabled || field.readOnly) return;
-      if (document.activeElement !== field) {
-        try { field.focus({ preventScroll: false }); } catch (_) { field.focus(); }
-      }
-    }, true);
-
-    auth.addEventListener("click", (event) => {
-      const label = event.target.closest?.("label");
-      const field = label?.querySelector?.("input:not([type='file']), textarea");
-      if (!field || field.disabled || field.readOnly || document.activeElement === field) return;
-      try { field.focus({ preventScroll: false }); } catch (_) { field.focus(); }
-    }, true);
-  }
-
   async function checkForUpdate() {
     if (!("serviceWorker" in navigator)) return;
     try {
@@ -62,8 +42,8 @@
     } catch (_) {}
   }
 
-  strengthenIOSFocus();
-
+  // Important for iPhone/PWA: do not programmatically focus auth inputs.
+  // Native tap focus is more reliable and avoids iOS showing the Paste menu.
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.addEventListener("message", (event) => {
       if (event.data?.type === "SCANIN_UPDATE_READY" && event.data.version !== APP_VERSION) {
