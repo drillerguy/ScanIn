@@ -10,26 +10,25 @@
 .composer-actions{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:8px}.composer-actions>*{min-width:0}.composer-actions button:disabled{opacity:.55;pointer-events:none}
 .checkin-location{margin-top:6px;color:var(--accent2);font-size:.68rem;font-weight:800;line-height:1.25;white-space:normal}.feed-card .checkin-location{padding-top:2px}
 
-/* html5-qrcode temporarily mounts the selected photo here while decoding it.
-   Keep that helper surface off-screen so the user's photo never becomes page content. */
-.photo-reader,#photoReader{
+/* Barcode-photo workspaces stay fully sized for decoding, but are positioned far off-screen. */
+.photo-reader,#photoReader,#photoDecodeWorkspace{
   position:fixed!important;
-  left:-10000px!important;
-  top:-10000px!important;
-  width:2px!important;
-  height:2px!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-width:2px!important;
-  max-height:2px!important;
+  left:-12000px!important;
+  top:0!important;
+  width:1200px!important;
+  height:1200px!important;
+  min-width:1200px!important;
+  min-height:1200px!important;
+  max-width:none!important;
+  max-height:none!important;
   overflow:hidden!important;
   opacity:0!important;
   pointer-events:none!important;
   z-index:-1!important;
 }
-.photo-reader img,.photo-reader canvas,#photoReader img,#photoReader canvas{
-  max-width:2px!important;
-  max-height:2px!important;
+.photo-reader img,.photo-reader canvas,#photoReader img,#photoReader canvas,#photoDecodeWorkspace img,#photoDecodeWorkspace canvas{
+  max-width:none!important;
+  max-height:none!important;
 }
 
 @media(max-width:380px){.checkin-composer{padding:13px}.composer-actions{grid-template-columns:1fr}.location-button{padding:11px}.pending-product{gap:9px}.pending-icon,.pending-thumb{width:44px;height:44px}}
